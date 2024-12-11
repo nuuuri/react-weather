@@ -1,50 +1,36 @@
-# React + TypeScript + Vite
+# Vite-Template
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- **React** 프로젝트 템플릿
+- Vite + SWC
+- ESLint 적용 (`@rushstack/eslint-config`)
+- Prettier 적용
 
-Currently, two official plugins are available:
+## 환경
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- node : v20.16.0
+- yarn : 1.22.22
 
-## Expanding the ESLint configuration
+## 시작하기
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+```bash
+# 1. 의존성 패키지 일괄 설치
+$ yarn install
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+# 2. 스크립트 실행
+$ yarn dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 폴더 구조
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- 프로젝트에 따라 types 등의 폴더가 추가될 수 있음
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+  src
+   ├── assets       # Asset 관리 (이미지, 아이콘 등)
+   ├── components   # 컴포넌트 관리
+   ├── pages        # 페이지 관리
+   ├── services     # API 관리
+   ├── stores       # 전역 상태 관리
+   ├── styles       # 전역 스타일 및 모듈화 스타일 파일 관리
+   └── utils        # 공통으로 사용되는 유틸리티 함수 관리
 ```
