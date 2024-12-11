@@ -1,4 +1,4 @@
-# Vite-Template
+# Vite-Template (with Yarn Berry)
 
 - **React** 프로젝트 템플릿
 - Vite + SWC
@@ -8,7 +8,7 @@
 ## 환경
 
 - node : v20.16.0
-- yarn : 1.22.22
+- yarn : 4.5.3
 
 ## 시작하기
 
@@ -16,7 +16,11 @@
 # 1. 의존성 패키지 일괄 설치
 $ yarn install
 
-# 2. 스크립트 실행
+# 2. vscode 설정
+$ yarn dlx @yarnpkg/sdks vscode
+
+
+# 3. 스크립트 실행
 $ yarn dev
 ```
 
