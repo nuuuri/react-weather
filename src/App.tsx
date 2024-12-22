@@ -1,15 +1,19 @@
 import { useEffect } from 'react';
 
-import WeatherService from './services/WeatherService';
+import { useCurrentWeather, useWeatherActions } from './stores/useWeatherStore';
 
 export default function App() {
-  useEffect(() => {
-    WeatherService.getShortTermForecast()
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+  const currentWeather = useCurrentWeather();
+  const { fetchCurrentWeather } = useWeatherActions();
 
-  return <div></div>;
+  useEffect(() => {
+    fetchCurrentWeather().catch((err) => console.error(err));
+  }, [fetchCurrentWeather]);
+
+  return (
+    <div>
+      <div>현재 기온 : {currentWeather.기온}도</div>
+      <div>1시간 강수량 : {currentWeather['1시간 강수량']}</div>
+    </div>
+  );
 }
