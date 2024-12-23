@@ -4,11 +4,16 @@ import { useCurrentWeather, useWeatherActions } from './stores/useWeatherStore';
 
 export default function App() {
   const currentWeather = useCurrentWeather();
-  const { fetchCurrentWeather } = useWeatherActions();
+  const { setCurrentCoordinate, fetchCurrentWeather } = useWeatherActions();
 
   useEffect(() => {
-    fetchCurrentWeather().catch((err) => console.error(err));
-  }, [fetchCurrentWeather]);
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { longitude, latitude } = position.coords;
+
+      setCurrentCoordinate(longitude, latitude);
+      fetchCurrentWeather().catch(() => {});
+    });
+  }, [setCurrentCoordinate, fetchCurrentWeather]);
 
   return (
     <div>
