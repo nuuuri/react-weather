@@ -31,7 +31,7 @@ class WeatherService {
 
   // 기상청 단기예보조회 서비스
   public getShortTermForecast(data: { x: number; y: number }) {
-    const date = new Date('2024-12-23 23:5');
+    const date = new Date();
     const times = [2, 5, 8, 11, 14, 17, 20, 23];
     const index = Math.floor((date.getHours() + 1) / 3) - 1;
 

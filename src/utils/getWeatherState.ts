@@ -1,6 +1,9 @@
 import { CurrentWeather } from '@/types/weather/CurrentWeather';
+import { ShortTermForecast } from '@/types/weather/ShortTermForecast';
 
-export const getWeatherState = (weather: CurrentWeather) => {
+export const getWeatherState = (
+  weather: CurrentWeather | ShortTermForecast
+) => {
   const weatherStates = [
     '',
     '비',

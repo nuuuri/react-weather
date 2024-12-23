@@ -14,6 +14,9 @@ export const ShortTermForecastCategory = {
   WAV: '파고',
   VEC: '풍향',
   WSD: '풍속',
+  FCST_DATE: '기준 날짜',
+  FCST_TIME: '기준 시간',
+  STATE: '날씨상태',
 } as const;
 
 export type ShortTermForecastCategoryType =
