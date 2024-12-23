@@ -62,13 +62,19 @@ const useWeatherStore = create<WeatherStoreType>((set, get) => ({
 
       const newObj = {} as CurrentWeather;
 
-      (items as CurrentWeatherData[]).forEach((item) => {
+      const currentData = (items as CurrentWeatherData[])
+        .sort((a, b) => (a.fcstTime < b.fcstTime ? -1 : 1))
+        .slice(0, 10);
+
+      console.log(currentData);
+
+      currentData.forEach((item) => {
         const category =
           CurrentWeatherCategory[
             item.category as keyof typeof CurrentWeatherCategory
           ];
 
-        newObj[category] = item.obsrValue;
+        newObj[category] = item.fcstValue;
       });
 
       set({ currentWeather: newObj });
