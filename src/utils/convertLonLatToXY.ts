@@ -44,7 +44,7 @@ const lamcproj = (lon: number, lat: number) => {
   return { x: x, y: y };
 };
 
-export const getCoordinates = (lon: number, lat: number) => {
+export const convertLonLatToXY = (lon: number, lat: number) => {
   const lon1 = lon;
   const lat1 = lat;
   const { x, y } = lamcproj(lon1, lat1);

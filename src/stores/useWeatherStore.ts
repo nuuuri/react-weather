@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import LocalService from '@/services/LocalService';
 import WeatherService from '@/services/WeatherService';
 
-import { getCoordinates } from '@/utils/getCoordinates';
+import { convertLonLatToXY } from '@/utils/convertLonLatToXY';
 
 import {
   CurrentWeather,
@@ -36,7 +36,7 @@ const useWeatherStore = create<WeatherStoreType>((set, get) => ({
   shortTermForecast: [],
   actions: {
     setCurrentCoordinate: (lon: number, lat: number) => {
-      const { x, y } = getCoordinates(lon, lat);
+      const { x, y } = convertLonLatToXY(lon, lat);
 
       set({ currentCoordinate: { x, y } });
     },
