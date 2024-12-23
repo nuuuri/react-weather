@@ -113,6 +113,11 @@ module.exports = {
             position: 'after',
           },
           {
+            pattern: '@/types{/*,/*/*}',
+            group: 'internal',
+            position: 'after',
+          },
+          {
             pattern: '@/utils/*',
             group: 'internal',
             position: 'after',

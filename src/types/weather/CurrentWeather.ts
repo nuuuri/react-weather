@@ -10,6 +10,7 @@ export const CurrentWeatherCategory = {
   LGT: '낙뢰',
   VEC: '풍향',
   WSD: '풍속',
+  STATE: '날씨상태',
 } as const;
 
 export type CurrentWeatherCategoryType =

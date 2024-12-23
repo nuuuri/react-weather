@@ -25,8 +25,8 @@ export default function App() {
   return (
     <div>
       <div>{currentRegion}</div>
-      <div>현재 기온 : {currentWeather.기온}도</div>
-      <div>1시간 강수량 : {currentWeather['1시간 강수량']}</div>
+      <div>{currentWeather.기온}℃</div>
+      <div>{currentWeather.날씨상태}</div>
     </div>
   );
 }

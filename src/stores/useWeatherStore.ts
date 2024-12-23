@@ -3,14 +3,15 @@ import { create } from 'zustand';
 import LocalService from '@/services/LocalService';
 import WeatherService from '@/services/WeatherService';
 
-import { convertLonLatToXY } from '@/utils/convertLonLatToXY';
-
 import {
   CurrentWeather,
   CurrentWeatherCategory,
   CurrentWeatherData,
 } from '@/types/weather/CurrentWeather';
 import { ShortTermForecast } from '@/types/weather/ShortTermForecast';
+
+import { convertLonLatToXY } from '@/utils/convertLonLatToXY';
+import { getWeatherState } from '@/utils/getWeatherState';
 
 interface Coordinate {
   x: number;
@@ -22,6 +23,7 @@ interface WeatherStoreType {
   currentRegion: string;
   currentWeather: CurrentWeather;
   shortTermForecast: ShortTermForecast[];
+
   actions: {
     setCurrentCoordinate: (lon: number, lat: number) => void;
     setCurrentRegion: (lon: number, lat: number) => Promise<void>;
@@ -34,12 +36,14 @@ const useWeatherStore = create<WeatherStoreType>((set, get) => ({
   currentRegion: '',
   currentWeather: {} as CurrentWeather,
   shortTermForecast: [],
+
   actions: {
     setCurrentCoordinate: (lon: number, lat: number) => {
       const { x, y } = convertLonLatToXY(lon, lat);
 
       set({ currentCoordinate: { x, y } });
     },
+
     setCurrentRegion: async (lon: number, lat: number) => {
       const { documents } = await LocalService.getRegionInfo({ lon, lat }).then(
         (res) => res.data
@@ -51,6 +55,7 @@ const useWeatherStore = create<WeatherStoreType>((set, get) => ({
 
       set({ currentRegion: doc.address_name });
     },
+
     fetchCurrentWeather: async () => {
       const { currentCoordinate } = get();
 
@@ -66,8 +71,6 @@ const useWeatherStore = create<WeatherStoreType>((set, get) => ({
         .sort((a, b) => (a.fcstTime < b.fcstTime ? -1 : 1))
         .slice(0, 10);
 
-      console.log(currentData);
-
       currentData.forEach((item) => {
         const category =
           CurrentWeatherCategory[
@@ -76,6 +79,11 @@ const useWeatherStore = create<WeatherStoreType>((set, get) => ({
 
         newObj[category] = item.fcstValue;
       });
+
+      // 날씨 상태 값 업데이트 (ex. 맑음, 흐림, ...)
+      newObj.날씨상태 = getWeatherState(newObj);
+
+      console.log(newObj.날씨상태);
 
       set({ currentWeather: newObj });
     },
