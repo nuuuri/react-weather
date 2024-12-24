@@ -22,11 +22,6 @@ interface RegionStoreType {
     ) => Promise<void>;
     fetchCurrentWeather: (x: number, y: number) => Promise<Weather>;
     fetchForecast: (x: number, y: number) => Promise<Weather[]>;
-    fetchRegionPosition: (query: string) => Promise<{
-      name: string;
-      lon: number;
-      lat: number;
-    } | null>;
     removeSearchedRegion: () => void;
     addBookmark: (region: Region) => void;
     removeBookmark: (name: string) => void;
@@ -125,24 +120,6 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
       }
 
       return forecast;
-    },
-
-    fetchRegionPosition: async (query: string) => {
-      const { documents } = await LocalService.getRegionPosition({
-        query,
-      }).then((res) => res.data);
-
-      if (documents.length === 0) return null;
-
-      const position = {
-        name: documents[0].address_name,
-        lon: documents[0].x,
-        lat: documents[0].y,
-      };
-
-      console.log(position);
-
-      return position;
     },
 
     removeSearchedRegion: () => {

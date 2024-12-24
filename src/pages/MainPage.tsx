@@ -3,6 +3,13 @@ import { useEffect, useState } from 'react';
 import CurrentWeather from '@/components/CurrentWeather';
 import HourlyWeather from '@/components/HourlyWeather';
 
+import { useDebounce } from '@/utils/useDebounce';
+
+import {
+  useKeyItems,
+  useKeyword,
+  useKeywordActions,
+} from '@/stores/useKeywordStore';
 import {
   useCurrentRegion,
   useRegionActions,
@@ -10,23 +17,19 @@ import {
 } from '@/stores/useRegionStore';
 
 export default function MainPage() {
-  const [keyword, setKeyword] = useState('');
-
   const currentRegion = useCurrentRegion();
   const searchedRegion = useSearchedRegion();
-  const { setRegion, fetchRegionPosition, removeSearchedRegion } =
-    useRegionActions();
+  const { setRegion, removeSearchedRegion } = useRegionActions();
 
-  const search = () => {
-    fetchRegionPosition(keyword)
-      .then((res) => {
-        console.log(res);
-        if (res) {
-          setRegion(res.lon, res.lat, 'searched').catch(() => {});
-        }
-      })
-      .catch(() => {});
-  };
+  const keyword = useKeyword();
+  const keyItems = useKeyItems();
+  const { setKeyword, fetchKeyItems } = useKeywordActions();
+
+  const debouncedKeyword = useDebounce(keyword, 200);
+
+  useEffect(() => {
+    fetchKeyItems(debouncedKeyword).catch(() => {});
+  }, [debouncedKeyword, fetchKeyItems]);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -43,14 +46,30 @@ export default function MainPage() {
   return (
     <div className="flex w-screen h-screen overflow-hidden">
       <div className="w-1/5 h-full px-5 py-10 bg-slate-300">
-        <div className="flex gap-1 pb-5">
-          <input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
-          <button
-            className=" flex-shrink-0 px-1 py-0.5 rounded-sm text-white bg-slate-700 text-sm "
-            onClick={search}>
-            검색
-          </button>
+        <div className="relative flex gap-1 mb-5">
+          <input
+            className="w-full"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+          />
+
+          {keyItems.length > 0 && (
+            <div className="absolute top-[100%] bg-white mt-1 p-1">
+              {keyItems.map((item) => (
+                <div
+                  key={item.addressName}
+                  className="text-gray-400 cursor-pointer hover:text-gray-900"
+                  onClick={() => {
+                    setRegion(item.lon, item.lat, 'searched').catch(() => {});
+                    setKeyword('');
+                  }}>
+                  {item.placeName}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
+
         <div
           className="p-2 border rounded-md cursor-pointer"
           onClick={removeSearchedRegion}>

@@ -14,8 +14,8 @@ class LocalService {
     });
   }
 
-  public getRegionPosition(data: { query: string }) {
-    return axios.get(`${this.BASE_URL}/search/address.json`, {
+  public getRegionByKeyword(data: { query: string }) {
+    return axios.get(`${this.BASE_URL}/search/keyword.json`, {
       params: { query: data.query },
       headers,
     });
