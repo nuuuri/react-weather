@@ -19,7 +19,14 @@ interface RegionStoreType {
       type?: 'current' | 'searched'
     ) => Promise<void>;
     fetchCurrentWeather: (x: number, y: number) => Promise<Weather>;
-    fetchForecast: (x: number, y: number) => Promise<Weather[]>;
+    fetchForecast: (
+      x: number,
+      y: number
+    ) => Promise<{
+      forecast: Weather[];
+      highestTemp: number;
+      lowestTemp: number;
+    }>;
     removeSearchedRegion: () => void;
   };
 }
@@ -41,8 +48,14 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
         )
       );
 
+      const { forecast, highestTemp, lowestTemp } = await actions.fetchForecast(
+        x,
+        y
+      );
       const currentWeather = await actions.fetchCurrentWeather(x, y);
-      const forecast = await actions.fetchForecast(x, y);
+
+      currentWeather.highestTemp = highestTemp + '';
+      currentWeather.lowestTemp = lowestTemp + '';
 
       const region = {
         name: currentRegionDoc.address_name,
@@ -97,6 +110,9 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
 
       const forecast: Weather[] = [];
 
+      let lowestTemp = 100;
+      let highestTemp = -100;
+
       for (let i = 0; i < items.length; i += 12) {
         const datas = items.slice(i, i + 12);
 
@@ -104,6 +120,11 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
           const attr = WeatherAttrs[cur.category] as keyof Weather;
 
           if (attr) acc[attr] = cur.fcstValue;
+
+          if (attr === 'temp') {
+            if (+cur.fcstValue < lowestTemp) lowestTemp = +cur.fcstValue;
+            if (+cur.fcstValue > highestTemp) highestTemp = +cur.fcstValue;
+          }
           return acc;
         }, {} as Weather);
 
@@ -114,7 +135,7 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
         forecast.push(weather);
       }
 
-      return forecast;
+      return { forecast, highestTemp, lowestTemp };
     },
 
     removeSearchedRegion: () => {
