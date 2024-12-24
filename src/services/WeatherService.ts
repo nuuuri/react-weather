@@ -32,26 +32,15 @@ class WeatherService {
   // 기상청 단기예보조회 서비스
   public getShortTermForecast(data: { x: number; y: number }) {
     const date = new Date();
-    const times = [2, 5, 8, 11, 14, 17, 20, 23];
-    const index = Math.floor((date.getHours() + 1) / 3) - 1;
-
-    if (index === -1) {
-      date.setDate(date.getDate() - 1);
-      date.setHours(23);
-    } else date.setHours(times[index]);
-
-    // 기상청 API 제공 시간에 따른 기준 시간 변경
-    if (+times[index] === date.getHours() && date.getMinutes() < 10) {
-      date.setHours(date.getHours() - 3);
-    }
+    date.setDate(date.getDate() - 1);
 
     const baseDate = dayjs(date).format('YYYYMMDD');
-    const baseTime = dayjs(date).format('HH00');
+    const baseTime = dayjs(date).format('2300');
 
     return axios.get(`${this.BASE_URL}/getVilageFcst`, {
       params: {
         serviceKey: import.meta.env.VITE_WEATHER_SERVICE_KEY,
-        numOfRows: 12 * 24, // 관측 시간 이후 24시간 동안의 데이터
+        numOfRows: 12 * 25, // 관측 시간 이후 24시간 동안의 데이터
         pageNo: 1,
         dataType: 'JSON',
         base_date: baseDate,

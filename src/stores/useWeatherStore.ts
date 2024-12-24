@@ -103,7 +103,7 @@ const useWeatherStore = create<WeatherStoreType>((set, get) => ({
         (res) => res.data.response.body.items.item
       )) as ShortTermForecastData[];
 
-      let newList = [] as ShortTermForecast[];
+      const newList = [] as ShortTermForecast[];
 
       for (let i = 0; i < items.length; i += 12) {
         const datas = items.slice(i, i + 12);
@@ -121,15 +121,6 @@ const useWeatherStore = create<WeatherStoreType>((set, get) => ({
         newObj['날씨상태'] = getWeatherState(newObj);
         newList.push(newObj);
       }
-
-      // 현재 시간 이전 데이터 삭제
-      const date = new Date();
-
-      newList = newList.filter(
-        (data) =>
-          data['기준 날짜'] !== dayjs(date).format('YYYYMMDD') ||
-          data['기준 시간'] >= dayjs(date).format('HH00')
-      );
 
       set({ shortTermForecast: newList });
     },
