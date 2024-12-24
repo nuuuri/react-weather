@@ -13,7 +13,7 @@ interface KeywordStoreType {
   };
 }
 
-const useKeywordStore = create<KeywordStoreType>((set, get) => ({
+const useKeywordStore = create<KeywordStoreType>((set) => ({
   keyword: '',
   keyItems: [],
 
