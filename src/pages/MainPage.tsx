@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
+import BookmarkItem from '@/components/BookmarkItem';
+import BookmarkList from '@/components/BookmarkList';
 import CurrentWeather from '@/components/CurrentWeather';
 import HourlyWeather from '@/components/HourlyWeather';
+import SearchList from '@/components/SearchList';
 
 import { useDebounce } from '@/utils/useDebounce';
 
@@ -60,41 +63,31 @@ export default function MainPage() {
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
           />
-
           {keyItems.length > 0 && (
-            <div className="absolute top-[100%] bg-white mt-1 p-1">
-              {keyItems.map((item) => (
-                <div
-                  key={item.addressName}
-                  className="text-gray-400 cursor-pointer hover:text-gray-900"
-                  onClick={() => {
-                    setRegion(item.lon, item.lat, 'searched').catch(() => {});
-                    setKeyword('');
-                  }}>
-                  {item.placeName}
-                </div>
-              ))}
-            </div>
+            <SearchList
+              data={keyItems}
+              onClickItem={(item) => {
+                setRegion(item.lon, item.lat, 'searched').catch(() => {});
+                setKeyword('');
+              }}
+            />
           )}
         </div>
-
-        <div
-          className="p-2 border rounded-md cursor-pointer"
-          onClick={removeSearchedRegion}>
-          <p className="text-sm font-bold">현재 위치</p>
-          {currentRegion?.name}
-        </div>
-        <div>즐겨찾기 목록</div>
-        {bookmarks.map((bookmark) => (
-          <div
-            key={bookmark.name}
-            className="p-2 border rounded-md cursor-pointer"
-            onClick={() => {
-              setRegion(bookmark.lon, bookmark.lat, 'searched').catch(() => {});
-            }}>
-            {bookmark?.name}
-          </div>
-        ))}
+        {currentRegion && (
+          <BookmarkItem
+            data={{
+              ...currentRegion,
+            }}
+            onClick={removeSearchedRegion}>
+            <p className="text-sm font-bold">현재 위치</p>
+          </BookmarkItem>
+        )}
+        <BookmarkList
+          data={bookmarks}
+          onClickItem={(bookmark) => {
+            setRegion(bookmark.lon, bookmark.lat, 'searched').catch(() => {});
+          }}
+        />
       </div>
       <div className="flex flex-col justify-center w-4/5 gap-20 p-10">
         {bookmarks.find((bookmark) => bookmark.name === region.name) ? (

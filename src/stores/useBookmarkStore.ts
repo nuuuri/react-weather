@@ -1,9 +1,10 @@
 import { create } from 'zustand';
 
+import { Bookmark } from '@/types/Bookmark';
 import { Region } from '@/types/Region';
 
 interface BookmarkStoreType {
-  bookmarks: { name: string; lon: number; lat: number }[];
+  bookmarks: Bookmark[];
   actions: {
     fetchBookmarks: () => void;
     addBookmark: (region: Region) => void;

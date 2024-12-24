@@ -2,16 +2,11 @@ import { create } from 'zustand';
 
 import LocalService from '@/services/LocalService';
 
-interface KeyItem {
-  placeName: string;
-  addressName: string;
-  lon: number;
-  lat: number;
-}
+import { SearchItem } from '@/types/Search';
 
 interface KeywordStoreType {
   keyword: string;
-  keyItems: KeyItem[];
+  keyItems: SearchItem[];
   actions: {
     setKeyword: (keyword: string) => void;
     fetchKeyItems: (keyword: string) => Promise<void>;
