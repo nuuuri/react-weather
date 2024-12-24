@@ -12,8 +12,6 @@ import { getWeatherState } from '@/utils/getWeatherState';
 interface RegionStoreType {
   currentRegion: Region | undefined;
   searchedRegion: Region | undefined;
-  bookmarkItems: Region[];
-
   actions: {
     setRegion: (
       lon: number,
@@ -23,15 +21,12 @@ interface RegionStoreType {
     fetchCurrentWeather: (x: number, y: number) => Promise<Weather>;
     fetchForecast: (x: number, y: number) => Promise<Weather[]>;
     removeSearchedRegion: () => void;
-    addBookmark: (region: Region) => void;
-    removeBookmark: (name: string) => void;
   };
 }
 
 const useRegionStore = create<RegionStoreType>((set, get) => ({
   currentRegion: undefined,
   searchedRegion: undefined,
-  bookmarkItems: [],
   actions: {
     setRegion: async (lon: number, lat: number, type = 'current') => {
       const { actions } = get();
@@ -125,9 +120,6 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
     removeSearchedRegion: () => {
       set({ searchedRegion: undefined });
     },
-
-    addBookmark: () => {},
-    removeBookmark: () => {},
   },
 }));
 

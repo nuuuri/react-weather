@@ -5,6 +5,7 @@ import HourlyWeather from '@/components/HourlyWeather';
 
 import { useDebounce } from '@/utils/useDebounce';
 
+import { useBookmarkActions, useBookmarks } from '@/stores/useBookmarkStore';
 import {
   useKeyItems,
   useKeyword,
@@ -20,6 +21,9 @@ export default function MainPage() {
   const currentRegion = useCurrentRegion();
   const searchedRegion = useSearchedRegion();
   const { setRegion, removeSearchedRegion } = useRegionActions();
+
+  const bookmarks = useBookmarks();
+  const { fetchBookmarks, addBookmark, removeBookmark } = useBookmarkActions();
 
   const keyword = useKeyword();
   const keyItems = useKeyItems();
@@ -38,6 +42,10 @@ export default function MainPage() {
       setRegion(longitude, latitude).catch(() => {});
     });
   }, [setRegion]);
+
+  useEffect(() => {
+    fetchBookmarks();
+  }, [fetchBookmarks]);
 
   const region = searchedRegion ?? currentRegion;
 
@@ -76,8 +84,27 @@ export default function MainPage() {
           <p className="text-sm font-bold">현재 위치</p>
           {currentRegion?.name}
         </div>
+        <div>즐겨찾기 목록</div>
+        {bookmarks.map((bookmark) => (
+          <div
+            key={bookmark.name}
+            className="p-2 border rounded-md cursor-pointer"
+            onClick={() => {
+              setRegion(bookmark.lon, bookmark.lat, 'searched').catch(() => {});
+            }}>
+            {bookmark?.name}
+          </div>
+        ))}
       </div>
       <div className="flex flex-col justify-center w-4/5 gap-20 p-10">
+        {bookmarks.find((bookmark) => bookmark.name === region.name) ? (
+          <button onClick={() => removeBookmark(region.name)}>
+            즐겨찾기 해제
+          </button>
+        ) : (
+          <button onClick={() => addBookmark(region)}>즐겨찾기</button>
+        )}
+
         <CurrentWeather data={region} />
         <div className="flex w-full gap-5 p-5 overflow-x-auto">
           {region.forecast?.map((weather, idx) => (
