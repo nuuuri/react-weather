@@ -42,6 +42,8 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
       const currentWeather = await actions.fetchCurrentWeather(x, y);
       const forecast = await actions.fetchForecast(x, y);
 
+      console.log(forecast);
+
       set({
         currentRegion: {
           name: currentRegionDoc.address_name,
@@ -101,8 +103,8 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
           return acc;
         }, {} as Weather);
 
-        weather.fcstDate = items[0].fcstDate;
-        weather.fcstTime = items[0].fcstTime;
+        weather.fcstDate = datas[0].fcstDate;
+        weather.fcstTime = datas[0].fcstTime;
         weather.condition = getWeatherState(weather);
 
         forecast.push(weather);
