@@ -8,10 +8,27 @@
 
 - 배포 : https://reacet-weather.vercel.app/
 
+- 데스크탑 화면
+
+  <img width="49%" src="https://github.com/user-attachments/assets/f204cad1-2619-425b-86ae-a0f163986b4c"/>
+  <img width="49%" src="https://github.com/user-attachments/assets/244cb4d2-6436-4c51-b399-e7f71a17fc37"/>
+
+- 모바일 화면
+
+  <img width="200px" height="420px" src="https://github.com/user-attachments/assets/d49265a6-9847-42c7-94b8-1306b6cff7c9"/>
+  <img width="200px" height="420px" src="https://github.com/user-attachments/assets/ec0948ef-6c72-481c-acad-2bd2b411976c"/>
+
 ## 1. 환경
 
 - node : v20.16.0
-- yarn : 4.5.3
+- yarn : 4.5.3 (yarn berry)
+
+### 1.1. 사용 기술
+
+- 프로젝트 : React + Vite + SWC
+- 언어 : TypeScript
+- 상태관리 : Zustand
+- 스타일 : Tailwind CSS
 
 ## 2. 시작하기
 
@@ -21,7 +38,6 @@ $ yarn install
 
 # 2. vscode 설정
 $ yarn dlx @yarnpkg/sdks vscode
-
 
 # 3. 스크립트 실행
 $ yarn dev
@@ -67,7 +83,13 @@ $ yarn dev
 ### 4.2. 장소 검색하기 & 즐겨찾기
 
 - [x] 유저가 원하는 장소 검색 기능 (광역자체단체, 기초자치단체에 상관없이)
-  - Kakao Local API를 사용해 검색어에 따른 자동 완성 기능 구현
+  - Kakao Local API를 사용해 검색어에 따른 자동 완성 기능 구현 (디바운스 적용)
   - 자동 완성 리스트를 클릭하면 해당 장소의 날씨 정보 불러오기
 - [x] 검색한 장소를 즐겨찾기에 추가 & 삭제
   - 현재 위치는 항상 표출됨 (즐겨찾기 추가/삭제 불가)
+  - 즐겨찾기에 저장한 장소는 LocalStorage에 경도, 위도 값을 저장
+
+### 4.3. 기타 구현 내용
+
+- [x] 반응형 적용
+  - 모바일인 경우, LNB 바깥 영역을 터치하면 자동으로 닫히도록 구현
