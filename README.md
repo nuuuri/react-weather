@@ -6,7 +6,7 @@
 
 ## 0. 최종 구현 화면 미리보기
 
-- 배포 : https://reacet-weather-xc6h.vercel.app/
+- 배포 : https://reacet-weather.vercel.app/
 
 ## 1. 환경
 
