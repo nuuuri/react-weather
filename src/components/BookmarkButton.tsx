@@ -15,7 +15,7 @@ export default function BookmarkButton({
 }: BookmarkButtonProps) {
   return (
     <div
-      className={`p-1 border border-gray-300 rounded-full text-yellow-300  cursor-pointer [&_svg]:w-6 [&_svg]:h-6 ${className}`}>
+      className={`p-1 rounded-full cursor-pointer [&_svg]:w-6 [&_svg]:h-6 ${className}`}>
       {isChecked ? (
         <FaStar onClick={onUnselect} />
       ) : (
