@@ -11,12 +11,23 @@ import { getWeatherState } from '@/utils/getWeatherState';
 
 interface RegionStoreType {
   currentRegion: Region | undefined;
+  searchedRegion: Region | undefined;
   bookmarkItems: Region[];
 
   actions: {
-    setCurrentRegion: (lon: number, lat: number) => Promise<void>;
+    setRegion: (
+      lon: number,
+      lat: number,
+      type?: 'current' | 'searched'
+    ) => Promise<void>;
     fetchCurrentWeather: (x: number, y: number) => Promise<Weather>;
     fetchForecast: (x: number, y: number) => Promise<Weather[]>;
+    fetchRegionPosition: (query: string) => Promise<{
+      name: string;
+      lon: number;
+      lat: number;
+    } | null>;
+    removeSearchedRegion: () => void;
     addBookmark: (region: Region) => void;
     removeBookmark: (name: string) => void;
   };
@@ -24,9 +35,10 @@ interface RegionStoreType {
 
 const useRegionStore = create<RegionStoreType>((set, get) => ({
   currentRegion: undefined,
+  searchedRegion: undefined,
   bookmarkItems: [],
   actions: {
-    setCurrentRegion: async (lon: number, lat: number) => {
+    setRegion: async (lon: number, lat: number, type = 'current') => {
       const { actions } = get();
       const { x, y } = convertLonLatToXY(lon, lat);
 
@@ -42,19 +54,21 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
       const currentWeather = await actions.fetchCurrentWeather(x, y);
       const forecast = await actions.fetchForecast(x, y);
 
-      console.log(forecast);
+      const region = {
+        name: currentRegionDoc.address_name,
+        lon,
+        lat,
+        x,
+        y,
+        currentWeather,
+        forecast,
+      };
 
-      set({
-        currentRegion: {
-          name: currentRegionDoc.address_name,
-          lon,
-          lat,
-          x,
-          y,
-          currentWeather,
-          forecast,
-        },
-      });
+      if (type === 'current') {
+        set({ currentRegion: region });
+      } else {
+        set({ searchedRegion: region });
+      }
     },
 
     fetchCurrentWeather: async (x: number, y: number) => {
@@ -113,6 +127,28 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
       return forecast;
     },
 
+    fetchRegionPosition: async (query: string) => {
+      const { documents } = await LocalService.getRegionPosition({
+        query,
+      }).then((res) => res.data);
+
+      if (documents.length === 0) return null;
+
+      const position = {
+        name: documents[0].address_name,
+        lon: documents[0].x,
+        lat: documents[0].y,
+      };
+
+      console.log(position);
+
+      return position;
+    },
+
+    removeSearchedRegion: () => {
+      set({ searchedRegion: undefined });
+    },
+
     addBookmark: () => {},
     removeBookmark: () => {},
   },
@@ -120,5 +156,8 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
 
 export const useCurrentRegion = () =>
   useRegionStore((state) => state.currentRegion);
+
+export const useSearchedRegion = () =>
+  useRegionStore((state) => state.searchedRegion);
 
 export const useRegionActions = () => useRegionStore((state) => state.actions);
