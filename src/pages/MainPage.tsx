@@ -5,6 +5,7 @@ import BookmarkItem from '@/components/BookmarkItem';
 import BookmarkList from '@/components/BookmarkList';
 import CurrentWeather from '@/components/CurrentWeather';
 import HourlyWeather from '@/components/HourlyWeather';
+import Input from '@/components/Input';
 import SearchList from '@/components/SearchList';
 
 import { useDebounce } from '@/utils/useDebounce';
@@ -59,11 +60,7 @@ export default function MainPage() {
     <div className="flex w-screen h-screen overflow-hidden">
       <div className="w-1/5 h-full px-5 py-10 bg-slate-300">
         <div className="relative flex gap-1 mb-5">
-          <input
-            className="w-full"
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-          />
+          <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
           {keyItems.length > 0 && (
             <SearchList
               data={keyItems}
