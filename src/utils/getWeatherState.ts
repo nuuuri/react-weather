@@ -1,9 +1,6 @@
-import { CurrentWeather } from '@/types/weather/CurrentWeather';
-import { ShortTermForecast } from '@/types/weather/ShortTermForecast';
+import { Weather } from '@/types/Weather';
 
-export const getWeatherState = (
-  weather: CurrentWeather | ShortTermForecast
-) => {
+export const getWeatherState = (weather: Weather) => {
   const weatherStates = [
     '',
     '비',
@@ -15,13 +12,13 @@ export const getWeatherState = (
     '눈날림',
   ];
 
-  if (weather.강수형태 === '0') {
-    if (+weather.하늘상태 <= 5) return '맑음';
+  if (weather.precipitation === '0' || weather.precipitation === '강수없음') {
+    if (+weather.sky <= 5) return '맑음';
 
-    if (+weather.하늘상태 <= 8) return '구름 많음';
+    if (+weather.sky <= 8) return '구름 많음';
 
     return '흐림';
   }
 
-  return weatherStates[+weather.강수형태];
+  return weatherStates[+weather.precipitationForm];
 };

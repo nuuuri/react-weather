@@ -1,15 +1,14 @@
-import { ShortTermForecast } from '@/types/weather/ShortTermForecast';
-
+import { Weather } from '@/types/Weather';
 interface HourlyWeatherProps {
-  weather: ShortTermForecast;
+  data: Weather;
 }
 
-export default function HourlyWeather({ weather }: HourlyWeatherProps) {
+export default function HourlyWeather({ data }: HourlyWeatherProps) {
   return (
     <div className="flex flex-col text-sm">
-      <p>{weather['기준 시간'].replace(/00$/, '시')}</p>
-      <p>{weather['1시간 기온']}℃</p>
-      <p>{weather.날씨상태}</p>
+      <p>{data.fcstTime.replace(/00$/, '시')}</p>
+      <p>{data.temp}℃</p>
+      <p>{data.condition}</p>
     </div>
   );
 }

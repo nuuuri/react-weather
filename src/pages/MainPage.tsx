@@ -3,47 +3,31 @@ import { useEffect } from 'react';
 import CurrentWeather from '@/components/CurrentWeather';
 import HourlyWeather from '@/components/HourlyWeather';
 
-import {
-  useCurrentRegion,
-  useCurrentWeather,
-  useShortTermForecast,
-  useWeatherActions,
-} from '@/stores/useWeatherStore';
+import { useCurrentRegion, useRegionActions } from '@/stores/useRegionStore';
 
 export default function MainPage() {
-  const currentWeather = useCurrentWeather();
   const currentRegion = useCurrentRegion();
-  const shortTermForecast = useShortTermForecast();
-
-  const {
-    setCurrentCoordinate,
-    setCurrentRegion,
-    fetchCurrentWeather,
-    fetchShortTermForecast,
-  } = useWeatherActions();
+  const { setCurrentRegion } = useRegionActions();
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       const { longitude, latitude } = position.coords;
 
-      setCurrentCoordinate(longitude, latitude);
       setCurrentRegion(longitude, latitude).catch(() => {});
-      fetchCurrentWeather().catch(() => {});
-      fetchShortTermForecast().catch(() => {});
+
+      // test: 강남구 신사동
+      // setCurrentRegion(127.0361285, 37.525431).catch(() => {});
     });
-  }, [
-    setCurrentCoordinate,
-    setCurrentRegion,
-    fetchCurrentWeather,
-    fetchShortTermForecast,
-  ]);
+  }, [setCurrentRegion]);
+
+  if (!currentRegion) return <div>loading...</div>;
 
   return (
     <div>
-      <CurrentWeather region={currentRegion} weather={currentWeather} />
+      <CurrentWeather data={currentRegion} />
       <div className="flex gap-5">
-        {shortTermForecast.map((weather, idx) => (
-          <HourlyWeather key={idx} weather={weather} />
+        {currentRegion.forecast?.map((weather, idx) => (
+          <HourlyWeather key={idx} data={weather} />
         ))}
       </div>
     </div>

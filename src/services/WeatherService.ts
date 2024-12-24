@@ -6,7 +6,7 @@ class WeatherService {
     'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0';
 
   // 기상청 초단기예보조회 서비스
-  public getCurrentWeather(data: { x: number; y: number }) {
+  public getUltraShortTermForecast(data: { x: number; y: number }) {
     const date = new Date();
 
     // 기상청 API 제공 시간에 따라 기준 시간 변경
