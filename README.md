@@ -1,5 +1,6 @@
-# 에코앤리치 프론트엔드 과제
+# 날씨 웹 페이지 with React
 
+- 에코앤리치 프론트엔드 과제
 - 작성자 : 박윤수 (sbfl125@gmail.com)
 - 기한 : ~ 2024.12.26 (수) 오후 6시
 
@@ -32,12 +33,12 @@ $ yarn dev
 
 ```bash
   src
-   ├── assets       # Asset 관리 (이미지, 아이콘 등)
    ├── components   # 컴포넌트 관리
    ├── pages        # 페이지 관리
    ├── services     # API 관리
    ├── stores       # 전역 상태 관리
    ├── styles       # 전역 스타일 및 모듈화 스타일 파일 관리
+   ├── types        # 전역 타입 관리
    └── utils        # 공통으로 사용되는 유틸리티 함수 관리
 ```
 
