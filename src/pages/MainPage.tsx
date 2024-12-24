@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import BookmarkButton from '@/components/BookmarkButton';
 import BookmarkItem from '@/components/BookmarkItem';
 import BookmarkList from '@/components/BookmarkList';
 import CurrentWeather from '@/components/CurrentWeather';
@@ -89,13 +90,16 @@ export default function MainPage() {
           }}
         />
       </div>
-      <div className="flex flex-col justify-center w-4/5 gap-20 p-10">
-        {bookmarks.find((bookmark) => bookmark.name === region.name) ? (
-          <button onClick={() => removeBookmark(region.name)}>
-            즐겨찾기 해제
-          </button>
-        ) : (
-          <button onClick={() => addBookmark(region)}>즐겨찾기</button>
+      <div className="relative flex flex-col justify-center w-4/5 gap-20 p-10">
+        {region !== currentRegion && (
+          <BookmarkButton
+            className="absolute top-10 left-10"
+            isChecked={
+              !!bookmarks.find((bookmark) => bookmark.name === region.name)
+            }
+            onSelect={() => addBookmark(region)}
+            onUnselect={() => removeBookmark(region.name)}
+          />
         )}
 
         <CurrentWeather data={region} />
