@@ -1,6 +1,6 @@
 import { Weather } from '@/types/Weather';
 
-export const getWeatherState = (weather: Weather) => {
+export const getWeatherCondition = (weather: Weather) => {
   const weatherStates = [
     '',
     '비',

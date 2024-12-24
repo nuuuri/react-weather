@@ -7,7 +7,7 @@ import { Region } from '@/types/Region';
 import { ForecastData, WeatherAttrs, Weather } from '@/types/Weather';
 
 import { convertLonLatToXY } from '@/utils/convertLonLatToXY';
-import { getWeatherState } from '@/utils/getWeatherState';
+import { getWeatherCondition } from '@/utils/getWeatherCondition';
 
 interface RegionStoreType {
   currentRegion: Region | undefined;
@@ -85,7 +85,7 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
 
       currentWeather.fcstDate = items[0].fcstDate;
       currentWeather.fcstTime = items[0].fcstTime;
-      currentWeather.condition = getWeatherState(currentWeather);
+      currentWeather.condition = getWeatherCondition(currentWeather);
 
       return currentWeather;
     },
@@ -109,7 +109,7 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
 
         weather.fcstDate = datas[0].fcstDate;
         weather.fcstTime = datas[0].fcstTime;
-        weather.condition = getWeatherState(weather);
+        weather.condition = getWeatherCondition(weather);
 
         forecast.push(weather);
       }
