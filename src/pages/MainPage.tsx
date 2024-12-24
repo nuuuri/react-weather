@@ -41,8 +41,7 @@ export default function MainPage() {
   return (
     <div>
       <CurrentWeather region={currentRegion} weather={currentWeather} />
-      <div>오늘의 날씨</div>
-      <div style={{ display: 'flex', gap: '20px' }}>
+      <div className="flex gap-5">
         {shortTermForecast.map((weather, idx) => (
           <HourlyWeather key={idx} weather={weather} />
         ))}
