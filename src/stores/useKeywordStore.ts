@@ -33,7 +33,6 @@ const useKeywordStore = create<KeywordStoreType>((set) => ({
       }).then((res) => res.data);
 
       const items = documents.map((doc: any) => ({
-        placeName: doc.place_name,
         addressName: doc.address_name,
         lon: doc.x,
         lat: doc.y,

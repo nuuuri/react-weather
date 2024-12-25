@@ -13,7 +13,7 @@ export default function SearchList({ data, onClickItem }: SearchListProps) {
           key={item.addressName}
           className="text-gray-400 cursor-pointer hover:text-gray-900"
           onClick={() => onClickItem(item)}>
-          {item.placeName}
+          {item.addressName}
         </div>
       ))}
     </div>
