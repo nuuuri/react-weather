@@ -1,9 +1,5 @@
 # 날씨 웹 페이지 with React
 
-- 에코앤리치 프론트엔드 과제
-- 작성자 : 박윤수 (sbfl125@gmail.com)
-- 기한 : ~ 2024.12.26 (수) 오후 6시
-
 ## 0. 최종 구현 화면 미리보기
 
 - 배포 : https://reacet-weather.vercel.app/
