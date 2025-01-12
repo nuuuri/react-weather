@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { Position } from '@/features/region/model/types';
+
 const headers = {
   Authorization: `KakaoAK ${import.meta.env.VITE_KAKAO_REST_API_KEY}`,
 };
@@ -7,9 +9,11 @@ const headers = {
 class LocalService {
   private BASE_URL: string = 'https://dapi.kakao.com/v2/local';
 
-  public getRegionInfo(data: { lon: number; lat: number }) {
+  public getRegionInfo(data: Position) {
+    const { longitude, latitude } = data;
+
     return axios.get(`${this.BASE_URL}/geo/coord2regioncode.json`, {
-      params: { x: data.lon, y: data.lat },
+      params: { x: longitude, y: latitude },
       headers,
     });
   }

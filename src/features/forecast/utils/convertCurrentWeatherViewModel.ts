@@ -1,6 +1,10 @@
-import { ForecastData, Weather, WeatherAttrs } from '@/types/Weather';
-
 import { getWeatherCondition } from './getWeatherCondition';
+
+import {
+  ForecastData,
+  Weather,
+  WeatherAttrs,
+} from '@/features/forecast/model/types';
 
 export const convertCurrentWeatherViewModel = (data: ForecastData[]) => {
   const weatherData = data

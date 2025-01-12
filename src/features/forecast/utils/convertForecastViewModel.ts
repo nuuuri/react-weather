@@ -1,4 +1,8 @@
-import { ForecastData, Weather, WeatherAttrs } from '@/types/Weather';
+import {
+  ForecastData,
+  Weather,
+  WeatherAttrs,
+} from '@/features/forecast/model/types';
 
 import { getWeatherCondition } from './getWeatherCondition';
 

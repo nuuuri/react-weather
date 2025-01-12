@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 import { Bookmark } from '@/types/Bookmark';
-import { Region } from '@/types/Region';
+import { Region } from '@/features/region/model/types';
 
 interface BookmarkStoreType {
   bookmarks: Bookmark[];
