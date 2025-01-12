@@ -2,7 +2,7 @@ import { ForecastData, Weather, WeatherAttrs } from '@/types/Weather';
 
 import { getWeatherCondition } from './getWeatherCondition';
 
-export const convertWeatherViewModel = (data: ForecastData[]) => {
+export const convertCurrentWeatherViewModel = (data: ForecastData[]) => {
   const weatherData = data
     .sort((a, b) => {
       if (a.fcstDate === b.fcstDate) return a.fcstTime < b.fcstTime ? -1 : 1;
