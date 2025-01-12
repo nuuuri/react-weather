@@ -1,12 +1,16 @@
 import { create } from 'zustand';
 
+import ForecastService from '@/services/ForecastService';
 import LocalService from '@/services/LocalService';
-import WeatherService from '@/services/WeatherService';
 
 import { Region } from '@/types/Region';
 import { ForecastData, WeatherAttrs, Weather } from '@/types/Weather';
 
 import { convertLonLatToXY } from '@/utils/convertLonLatToXY';
+import {
+  getShortTermForecastBaseDateTime,
+  getUltraShortTermForecastBaseDateTime,
+} from '@/utils/getForecastBaseDateTime';
 import { getWeatherCondition } from '@/utils/getWeatherCondition';
 
 interface RegionStoreType {
@@ -75,7 +79,11 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
     },
 
     fetchCurrentWeather: async (x: number, y: number) => {
-      const items = (await WeatherService.getUltraShortTermForecast({
+      const { baseDate, baseTime } = getUltraShortTermForecastBaseDateTime();
+
+      const items = (await ForecastService.getUltraShortTermForecast({
+        baseDate,
+        baseTime,
         x,
         y,
       }).then((res) => res.data.response.body.items.item)) as ForecastData[];
@@ -104,9 +112,14 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
     },
 
     fetchForecast: async (x: number, y: number) => {
-      const items = (await WeatherService.getShortTermForecast({ x, y }).then(
-        (res) => res.data.response.body.items.item
-      )) as ForecastData[];
+      const { baseDate, baseTime } = getShortTermForecastBaseDateTime();
+
+      const items = (await ForecastService.getShortTermForecast({
+        baseDate,
+        baseTime,
+        x,
+        y,
+      }).then((res) => res.data.response.body.items.item)) as ForecastData[];
 
       const forecast: Weather[] = [];
 
