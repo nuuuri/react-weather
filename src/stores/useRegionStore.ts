@@ -7,6 +7,7 @@ import { ForecastData, WeatherAttrs, Weather } from '@/types/Weather';
 
 import ForecastService from '@/features/forecast/stores/ForecastService';
 import { convertLonLatToXY } from '@/features/forecast/utils/convertLonLatToXY';
+import { convertWeatherViewModel } from '@/features/forecast/utils/convertWeatherViewModel';
 import {
   getShortTermForecastBaseDateTime,
   getUltraShortTermForecastBaseDateTime,
@@ -88,25 +89,7 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
         y,
       }).then((res) => res.data.response.body.items.item)) as ForecastData[];
 
-      const currentWeatherData = items
-        .sort((a, b) => {
-          if (a.fcstDate === b.fcstDate)
-            return a.fcstTime < b.fcstTime ? -1 : 1;
-
-          return a.fcstDate < b.fcstDate ? -1 : 1;
-        })
-        .slice(0, 10);
-
-      const currentWeather = currentWeatherData.reduce((acc, cur) => {
-        const attr = WeatherAttrs[cur.category] as keyof Weather;
-
-        if (attr) acc[attr] = cur.fcstValue;
-        return acc;
-      }, {} as Weather);
-
-      currentWeather.fcstDate = items[0].fcstDate;
-      currentWeather.fcstTime = items[0].fcstTime;
-      currentWeather.condition = getWeatherCondition(currentWeather);
+      const currentWeather = convertWeatherViewModel(items);
 
       return currentWeather;
     },
