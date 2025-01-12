@@ -1,4 +1,4 @@
-import { Weather } from '@/types/Weather';
+import { Weather } from '@/features/forecast/model/types';
 
 import WeatherIcon from './WeatherIcon';
 interface HourlyWeatherProps {

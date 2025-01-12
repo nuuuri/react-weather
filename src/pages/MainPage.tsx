@@ -12,6 +12,7 @@ import SearchList from '@/components/SearchList';
 import { useDebounce } from '@/utils/useDebounce';
 import { useOutsideClick } from '@/utils/useOutsideClick';
 
+import { useForecastViewModel } from '@/features/forecast/model/useForecastViewModel';
 import { useBookmarkActions, useBookmarks } from '@/stores/useBookmarkStore';
 import {
   useKeyItems,
@@ -30,6 +31,8 @@ export default function MainPage() {
   const currentRegion = useCurrentRegion();
   const searchedRegion = useSearchedRegion();
   const { setRegion, removeSearchedRegion } = useRegionActions();
+
+  const { currentWeather, forecast } = useForecastViewModel(currentRegion);
 
   const bookmarks = useBookmarks();
   const { fetchBookmarks, addBookmark, removeBookmark } = useBookmarkActions();
@@ -64,7 +67,7 @@ export default function MainPage() {
 
   const region = searchedRegion ?? currentRegion;
 
-  if (!region) return <div>loading...</div>;
+  if (!region || !currentWeather) return <div>loading...</div>;
 
   return (
     <div className="flex justify-center w-screen h-screen overflow-hidden">
@@ -99,7 +102,11 @@ export default function MainPage() {
           <BookmarkList
             data={bookmarks}
             onClickItem={(bookmark) => {
-              setRegion(bookmark.lon, bookmark.lat, 'searched').catch(() => {});
+              setRegion(
+                bookmark.longitude,
+                bookmark.latitude,
+                'searched'
+              ).catch(() => {});
 
               if (window.innerWidth < 768) {
                 setIsOpenMenu(false);
@@ -126,9 +133,9 @@ export default function MainPage() {
           )}
         </div>
 
-        <CurrentWeather data={region} />
+        <CurrentWeather region={region} weather={currentWeather} />
         <div className="flex max-w-full gap-5 p-5 overflow-x-auto w-fit">
-          {region.forecast?.map((weather, idx) => (
+          {forecast?.map((weather, idx) => (
             <HourlyWeather key={idx} data={weather} />
           ))}
         </div>

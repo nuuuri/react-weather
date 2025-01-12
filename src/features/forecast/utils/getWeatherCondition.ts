@@ -1,4 +1,4 @@
-import { Weather } from '@/types/Weather';
+import { Weather } from '@/features/forecast/model/types';
 
 export const getWeatherCondition = (weather: Weather) => {
   const weatherStates = [
