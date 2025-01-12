@@ -6,8 +6,9 @@ import { Region } from '@/types/Region';
 import { ForecastData, WeatherAttrs, Weather } from '@/types/Weather';
 
 import ForecastService from '@/features/forecast/stores/ForecastService';
+import { convertCurrentWeatherViewModel } from '@/features/forecast/utils/convertCurrentWeatherViewModel';
+import { convertForecastViewModel } from '@/features/forecast/utils/convertForecastViewModel';
 import { convertLonLatToXY } from '@/features/forecast/utils/convertLonLatToXY';
-import { convertWeatherViewModel } from '@/features/forecast/utils/convertWeatherViewModel';
 import {
   getShortTermForecastBaseDateTime,
   getUltraShortTermForecastBaseDateTime,
@@ -89,7 +90,7 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
         y,
       }).then((res) => res.data.response.body.items.item)) as ForecastData[];
 
-      const currentWeather = convertWeatherViewModel(items);
+      const currentWeather = convertCurrentWeatherViewModel(items);
 
       return currentWeather;
     },
@@ -104,32 +105,8 @@ const useRegionStore = create<RegionStoreType>((set, get) => ({
         y,
       }).then((res) => res.data.response.body.items.item)) as ForecastData[];
 
-      const forecast: Weather[] = [];
-
-      let lowestTemp = 100;
-      let highestTemp = -100;
-
-      for (let i = 0; i < items.length; i += 12) {
-        const datas = items.slice(i, i + 12);
-
-        const weather = datas.reduce((acc, cur) => {
-          const attr = WeatherAttrs[cur.category] as keyof Weather;
-
-          if (attr) acc[attr] = cur.fcstValue;
-
-          if (attr === 'temp') {
-            if (+cur.fcstValue < lowestTemp) lowestTemp = +cur.fcstValue;
-            if (+cur.fcstValue > highestTemp) highestTemp = +cur.fcstValue;
-          }
-          return acc;
-        }, {} as Weather);
-
-        weather.fcstDate = datas[0].fcstDate;
-        weather.fcstTime = datas[0].fcstTime;
-        weather.condition = getWeatherCondition(weather);
-
-        forecast.push(weather);
-      }
+      const { forecast, highestTemp, lowestTemp } =
+        convertForecastViewModel(items);
 
       return { forecast, highestTemp, lowestTemp };
     },
