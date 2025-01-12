@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 import { Bookmark } from '@/types/Bookmark';
+
 import { Region } from '@/features/region/model/types';
 
 interface BookmarkStoreType {
@@ -27,8 +28,8 @@ const useBookmarkStore = create<BookmarkStoreType>((set, get) => ({
 
       const bookmarkData = {
         name: region.name,
-        lon: region.lon,
-        lat: region.lat,
+        longitude: region.longitude,
+        latitude: region.latitude,
       };
 
       set({

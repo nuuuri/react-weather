@@ -26,7 +26,7 @@ export const useFetchShortTermForecast = (params: { x: number; y: number }) => {
   const { baseDate, baseTime } = getShortTermForecastBaseDateTime();
 
   return useQuery({
-    queryKey: ['forecast', { type: 'short' }],
+    queryKey: ['forecast', { type: 'short' }, params],
     queryFn: () =>
       ForecastService.getShortTermForecast({ baseDate, baseTime, x, y }),
     enabled: x !== 0 && y !== 0,
