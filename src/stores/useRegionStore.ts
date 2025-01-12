@@ -1,17 +1,17 @@
 import { create } from 'zustand';
 
-import ForecastService from '@/services/ForecastService';
 import LocalService from '@/services/LocalService';
 
 import { Region } from '@/types/Region';
 import { ForecastData, WeatherAttrs, Weather } from '@/types/Weather';
 
-import { convertLonLatToXY } from '@/utils/convertLonLatToXY';
+import ForecastService from '@/features/forecast/stores/ForecastService';
+import { convertLonLatToXY } from '@/features/forecast/utils/convertLonLatToXY';
 import {
   getShortTermForecastBaseDateTime,
   getUltraShortTermForecastBaseDateTime,
-} from '@/utils/getForecastBaseDateTime';
-import { getWeatherCondition } from '@/utils/getWeatherCondition';
+} from '@/features/forecast/utils/getForecastBaseDateTime';
+import { getWeatherCondition } from '@/features/forecast/utils/getWeatherCondition';
 
 interface RegionStoreType {
   currentRegion: Region | undefined;
