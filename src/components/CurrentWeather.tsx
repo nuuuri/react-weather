@@ -1,7 +1,7 @@
-import { Region } from '@/features/region/model/types';
-import { Weather } from '@/features/forecast/model/types';
-
 import WeatherIcon from './WeatherIcon';
+
+import { Weather } from '@/features/forecast';
+import { Region } from '@/features/region';
 
 interface CurrentWeatherProps {
   region: Region;

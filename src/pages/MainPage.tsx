@@ -32,7 +32,9 @@ export default function MainPage() {
   const searchedRegion = useSearchedRegion();
   const { setRegion, removeSearchedRegion } = useRegionActions();
 
-  const { currentWeather, forecast } = useForecastViewModel(currentRegion);
+  const region = searchedRegion.name ? searchedRegion : currentRegion;
+
+  const { currentWeather, forecast } = useForecastViewModel(region);
 
   const bookmarks = useBookmarks();
   const { fetchBookmarks, addBookmark, removeBookmark } = useBookmarkActions();
@@ -65,9 +67,7 @@ export default function MainPage() {
     fetchBookmarks();
   }, [fetchBookmarks]);
 
-  const region = searchedRegion ?? currentRegion;
-
-  if (!region || !currentWeather) return <div>loading...</div>;
+  if (!region.name || !currentWeather) return <div>loading...</div>;
 
   return (
     <div className="flex justify-center w-screen h-screen overflow-hidden">

@@ -54,7 +54,9 @@ const useRegionStore = create<RegionStoreType>((set) => ({
     },
 
     removeSearchedRegion: () => {
-      set({ searchedRegion: undefined });
+      set({
+        searchedRegion: { name: '', longitude: 0, latitude: 0, x: 0, y: 0 },
+      });
     },
   },
 }));
