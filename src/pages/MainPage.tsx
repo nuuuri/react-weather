@@ -4,15 +4,13 @@ import { MdMenu } from 'react-icons/md';
 import BookmarkButton from '@/components/BookmarkButton';
 import BookmarkItem from '@/components/BookmarkItem';
 import BookmarkList from '@/components/BookmarkList';
-import CurrentWeather from '@/components/CurrentWeather';
-import HourlyWeather from '@/components/HourlyWeather';
 import Input from '@/components/Input';
 import SearchList from '@/components/SearchList';
 
 import { useDebounce } from '@/utils/useDebounce';
 import { useOutsideClick } from '@/utils/useOutsideClick';
 
-import { useForecastViewModel } from '@/features/forecast/model/useForecastViewModel';
+import { Forecast } from '@/features/forecast';
 import { useBookmarkActions, useBookmarks } from '@/stores/useBookmarkStore';
 import {
   useKeyItems,
@@ -33,8 +31,6 @@ export default function MainPage() {
   const { setRegion, removeSearchedRegion } = useRegionActions();
 
   const region = searchedRegion.name ? searchedRegion : currentRegion;
-
-  const { currentWeather, forecast } = useForecastViewModel(region);
 
   const bookmarks = useBookmarks();
   const { fetchBookmarks, addBookmark, removeBookmark } = useBookmarkActions();
@@ -67,7 +63,7 @@ export default function MainPage() {
     fetchBookmarks();
   }, [fetchBookmarks]);
 
-  if (!region.name || !currentWeather) return <div>loading...</div>;
+  if (!region.name) return <div>loading...</div>;
 
   return (
     <div className="flex justify-center w-screen h-screen overflow-hidden">
@@ -133,12 +129,7 @@ export default function MainPage() {
           )}
         </div>
 
-        <CurrentWeather region={region} weather={currentWeather} />
-        <div className="flex max-w-full gap-5 p-5 overflow-x-auto w-fit">
-          {forecast?.map((weather, idx) => (
-            <HourlyWeather key={idx} data={weather} />
-          ))}
-        </div>
+        <Forecast region={region} />
       </div>
     </div>
   );

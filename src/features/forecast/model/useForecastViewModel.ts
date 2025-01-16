@@ -5,20 +5,30 @@ import {
 import { convertCurrentWeatherViewModel } from '../utils/convertCurrentWeatherViewModel';
 import { convertForecastViewModel } from '../utils/convertForecastViewModel';
 
-import { ForecastData } from '@/features/forecast/model/types';
+import { ForecastData, Weather } from '@/features/forecast/model/types';
 import { Region } from '@/features/region/model/types';
 
-export const useForecastViewModel = (region: Region) => {
+interface ForecastViewModel {
+  currentWeather: Weather | undefined;
+  forecast: Weather[];
+  isLoading: boolean;
+}
+
+export const useForecastViewModel = (region: Region): ForecastViewModel => {
   const { x, y } = region;
 
-  const { data: ultraShortTermForecastData } = useFetchUltraShortTermForecast({
+  const {
+    data: ultraShortTermForecastData,
+    isLoading: isUltraShortTermForecastLoading,
+  } = useFetchUltraShortTermForecast({
     x,
     y,
   });
-  const { data: shortTermForecastData } = useFetchShortTermForecast({ x, y });
+  const { data: shortTermForecastData, isLoading: isShortTermForecastLoading } =
+    useFetchShortTermForecast({ x, y });
 
   if (!ultraShortTermForecastData || !shortTermForecastData)
-    return { currentWeather: null, forecast: [] };
+    return { currentWeather: undefined, forecast: [], isLoading: false };
 
   const ultraShortTermForecastItems = ultraShortTermForecastData.data.response
     .body.items.item as ForecastData[];
@@ -35,5 +45,9 @@ export const useForecastViewModel = (region: Region) => {
   currentWeather.highestTemp = `${highestTemp}`;
   currentWeather.lowestTemp = `${lowestTemp}`;
 
-  return { currentWeather, forecast };
+  return {
+    currentWeather,
+    forecast,
+    isLoading: isUltraShortTermForecastLoading || isShortTermForecastLoading,
+  };
 };
