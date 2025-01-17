@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import ForecastService from '@/features/forecast/stores/ForecastService';
+import ForecastService from '@/features/forecast/api/ForecastAPI';
 import {
   getShortTermForecastBaseDateTime,
   getUltraShortTermForecastBaseDateTime,

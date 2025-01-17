@@ -2,18 +2,20 @@ import { RefObject, useEffect } from 'react';
 
 import { useDebounce } from '@/utils/useDebounce';
 
-import BookmarkItem from './BookmarkItem';
-import BookmarkList from './BookmarkList';
 import Input from './Input';
 import SearchList from './SearchList';
 
+import { BookmarkItem, BookmarkList } from '@/features/bookmark';
 import { useBookmarks } from '@/stores/useBookmarkStore';
 import {
   useKeyItems,
   useKeyword,
   useKeywordActions,
 } from '@/stores/useKeywordStore';
-import { useCurrentRegion, useRegionActions } from '@/stores/useRegionStore';
+import {
+  useCurrentRegion,
+  useRegionActions,
+} from '@/features/region/model/useRegionStore';
 
 interface SidebarProps {
   ref?: RefObject<HTMLDivElement | null>;

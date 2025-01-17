@@ -1,3 +1,3 @@
 export type { Weather } from './model/types';
 
-export { default as Forecast } from './components/Forecast';
+export { default as Forecast } from './ui/Forecast';

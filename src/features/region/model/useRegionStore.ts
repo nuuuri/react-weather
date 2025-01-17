@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import LocalService from '@/services/LocalService';
+import RegionAPI from '../api/RegionAPI';
 
 import { Region } from '@/features/region/model/types';
 import { convertLonLatToXY } from '@/features/region/utils/convertLonLatToXY';
@@ -29,7 +29,7 @@ const useRegionStore = create<RegionStoreType>((set) => ({
     ) => {
       const { x, y } = convertLonLatToXY(longitude, latitude);
 
-      const currentRegionDoc = await LocalService.getRegionInfo({
+      const currentRegionDoc = await RegionAPI.getRegionInfo({
         longitude,
         latitude,
       }).then((res) =>

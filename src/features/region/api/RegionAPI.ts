@@ -6,7 +6,7 @@ const headers = {
   Authorization: `KakaoAK ${import.meta.env.VITE_KAKAO_REST_API_KEY}`,
 };
 
-class LocalService {
+class RegionAPI {
   private BASE_URL: string = 'https://dapi.kakao.com/v2/local';
 
   public getRegionInfo(data: Position) {
@@ -26,4 +26,4 @@ class LocalService {
   }
 }
 
-export default new LocalService();
+export default new RegionAPI();

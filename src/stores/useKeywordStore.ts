@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import LocalService from '@/services/LocalService';
+import LocalService from '@/features/region/api/RegionAPI';
 
 import { SearchItem } from '@/types/Search';
 

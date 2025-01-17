@@ -7,7 +7,7 @@ interface ForecastRequest {
   y: number;
 }
 
-class ForecastService {
+class ForecastAPI {
   private BASE_URL: string =
     'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0';
 
@@ -48,4 +48,4 @@ class ForecastService {
   }
 }
 
-export default new ForecastService();
+export default new ForecastAPI();

@@ -1,9 +1,10 @@
+import { convertCurrentWeatherViewModel } from '../utils/convertCurrentWeatherViewModel';
+import { convertForecastViewModel } from '../utils/convertForecastViewModel';
+
 import {
   useFetchShortTermForecast,
   useFetchUltraShortTermForecast,
-} from '../stores/useForecastQuery';
-import { convertCurrentWeatherViewModel } from '../utils/convertCurrentWeatherViewModel';
-import { convertForecastViewModel } from '../utils/convertForecastViewModel';
+} from './useForecastQuery';
 
 import { ForecastData, Weather } from '@/features/forecast/model/types';
 import { Region } from '@/features/region/model/types';
