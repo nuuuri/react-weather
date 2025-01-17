@@ -44,8 +44,6 @@ export default function MainPage() {
     fetchBookmarks();
   }, [fetchBookmarks]);
 
-  if (!region.name) return <div>loading...</div>;
-
   return (
     <div className="flex justify-center w-screen h-screen overflow-hidden">
       {isSidebarOpen && (
@@ -68,7 +66,6 @@ export default function MainPage() {
             />
           )}
         </div>
-
         <Forecast region={region} />
       </div>
     </div>
