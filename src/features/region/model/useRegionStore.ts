@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 
 import RegionAPI from '../api/RegionAPI';
+import { convertLonLatToXY } from '../utils/convertLonLatToXY';
 
-import { Region } from '@/features/region/model/types';
-import { convertLonLatToXY } from '@/features/region/utils/convertLonLatToXY';
+import { Region } from './types';
 
 interface RegionStoreType {
   currentRegion: Region;

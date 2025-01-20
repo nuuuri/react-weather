@@ -3,19 +3,15 @@ import { RefObject, useEffect } from 'react';
 import { useDebounce } from '@/utils/useDebounce';
 
 import Input from './Input';
-import SearchList from './SearchList';
 
-import { BookmarkItem, BookmarkList } from '@/features/bookmark';
-import { useBookmarks } from '@/stores/useBookmarkStore';
+import { BookmarkItem, BookmarkList, useBookmarks } from '@/features/bookmark';
+import { useCurrentRegion, useRegionActions } from '@/features/region';
 import {
+  SearchList,
   useKeyItems,
   useKeyword,
   useKeywordActions,
-} from '@/stores/useKeywordStore';
-import {
-  useCurrentRegion,
-  useRegionActions,
-} from '@/features/region/model/useRegionStore';
+} from '@/features/search';
 
 interface SidebarProps {
   ref?: RefObject<HTMLDivElement | null>;

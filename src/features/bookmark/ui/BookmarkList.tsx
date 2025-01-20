@@ -1,4 +1,4 @@
-import { Bookmark } from '@/types/Bookmark';
+import { Bookmark } from '../model/types';
 
 import BookmarkItem from './BookmarkItem';
 

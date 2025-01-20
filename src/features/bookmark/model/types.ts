@@ -1,4 +1,4 @@
-import { Position } from '@/features/region/model/types';
+import { Position } from '@/features/region';
 
 export interface Bookmark extends Position {
   name: string;

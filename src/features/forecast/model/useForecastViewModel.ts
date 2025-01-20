@@ -1,13 +1,13 @@
 import { convertCurrentWeatherViewModel } from '../utils/convertCurrentWeatherViewModel';
 import { convertForecastViewModel } from '../utils/convertForecastViewModel';
 
+import { ForecastData, Weather } from './types';
 import {
   useFetchShortTermForecast,
   useFetchUltraShortTermForecast,
 } from './useForecastQuery';
 
-import { ForecastData, Weather } from '@/features/forecast/model/types';
-import { Region } from '@/features/region/model/types';
+import { Region } from '@/features/region';
 
 interface ForecastViewModel {
   currentWeather: Weather | undefined;

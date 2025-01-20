@@ -5,14 +5,17 @@ import Sidebar from '@/components/Sidebar';
 
 import { useOutsideClick } from '@/utils/useOutsideClick';
 
-import { BookmarkButton } from '@/features/bookmark';
+import {
+  BookmarkButton,
+  useBookmarkActions,
+  useBookmarks,
+} from '@/features/bookmark';
 import { Forecast } from '@/features/forecast';
 import {
   useCurrentRegion,
   useRegionActions,
   useSearchedRegion,
 } from '@/features/region';
-import { useBookmarkActions, useBookmarks } from '@/stores/useBookmarkStore';
 
 export default function MainPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

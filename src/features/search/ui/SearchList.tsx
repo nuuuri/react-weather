@@ -1,4 +1,4 @@
-import { SearchItem } from '@/types/Search';
+import { SearchItem } from '../model/types';
 
 interface SearchListProps {
   data: SearchItem[];

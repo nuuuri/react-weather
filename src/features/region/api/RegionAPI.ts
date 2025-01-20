@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { Position } from '@/features/region/model/types';
+import { Position } from '../model/types';
 
 const headers = {
   Authorization: `KakaoAK ${import.meta.env.VITE_KAKAO_REST_API_KEY}`,
@@ -14,13 +14,6 @@ class RegionAPI {
 
     return axios.get(`${this.BASE_URL}/geo/coord2regioncode.json`, {
       params: { x: longitude, y: latitude },
-      headers,
-    });
-  }
-
-  public getRegionByKeyword(data: { query: string }) {
-    return axios.get(`${this.BASE_URL}/search/address.json`, {
-      params: { query: data.query },
       headers,
     });
   }

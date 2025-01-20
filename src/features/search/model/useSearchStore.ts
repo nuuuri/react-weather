@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 
-import LocalService from '@/features/region/api/RegionAPI';
+import SearchAPI from '../api/SearchAPI';
 
-import { SearchItem } from '@/types/Search';
+import { SearchItem } from './types';
 
-interface KeywordStoreType {
+interface SearchStoreType {
   keyword: string;
   keyItems: SearchItem[];
   actions: {
@@ -13,7 +13,7 @@ interface KeywordStoreType {
   };
 }
 
-const useKeywordStore = create<KeywordStoreType>((set) => ({
+const useSearchStore = create<SearchStoreType>((set) => ({
   keyword: '',
   keyItems: [],
 
@@ -28,7 +28,7 @@ const useKeywordStore = create<KeywordStoreType>((set) => ({
         return;
       }
 
-      const { documents } = await LocalService.getRegionByKeyword({
+      const { documents } = await SearchAPI.getRegionByKeyword({
         query: keyword,
       }).then((res) => res.data);
 
@@ -43,9 +43,8 @@ const useKeywordStore = create<KeywordStoreType>((set) => ({
   },
 }));
 
-export const useKeyword = () => useKeywordStore((state) => state.keyword);
+export const useKeyword = () => useSearchStore((state) => state.keyword);
 
-export const useKeyItems = () => useKeywordStore((state) => state.keyItems);
+export const useKeyItems = () => useSearchStore((state) => state.keyItems);
 
-export const useKeywordActions = () =>
-  useKeywordStore((state) => state.actions);
+export const useKeywordActions = () => useSearchStore((state) => state.actions);
