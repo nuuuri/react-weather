@@ -1,6 +1,6 @@
 import { RefObject, useEffect } from 'react';
 
-import { useDebounce } from '@/utils/useDebounce';
+import { useDebounce } from '@/shared/utils/useDebounce';
 
 import Input from './Input';
 

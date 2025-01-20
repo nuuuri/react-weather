@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 import { MdMenu } from 'react-icons/md';
 
-import Sidebar from '@/components/Sidebar';
-
-import { useOutsideClick } from '@/utils/useOutsideClick';
-
 import {
   BookmarkButton,
   useBookmarkActions,
@@ -16,6 +12,8 @@ import {
   useRegionActions,
   useSearchedRegion,
 } from '@/features/region';
+import Sidebar from '@/shared/ui/Sidebar';
+import { useOutsideClick } from '@/shared/utils/useOutsideClick';
 
 export default function MainPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
