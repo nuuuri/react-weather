@@ -1,3 +1,5 @@
+import { Region } from '@/features/region';
+
 import { convertCurrentWeatherViewModel } from '../utils/convertCurrentWeatherViewModel';
 import { convertForecastViewModel } from '../utils/convertForecastViewModel';
 
@@ -6,8 +8,6 @@ import {
   useFetchShortTermForecast,
   useFetchUltraShortTermForecast,
 } from './useForecastQuery';
-
-import { Region } from '@/features/region';
 
 interface ForecastViewModel {
   currentWeather: Weather | undefined;

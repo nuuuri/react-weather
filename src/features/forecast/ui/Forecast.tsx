@@ -1,9 +1,9 @@
+import { Region } from '@/features/region';
+
 import { useForecastViewModel } from '../model/useForecastViewModel';
 
 import CurrentWeather from './CurrentWeather';
 import HourlyWeatherList from './HourlyWeatherList';
-
-import { Region } from '@/features/region';
 
 interface ForecastProps {
   region: Region;

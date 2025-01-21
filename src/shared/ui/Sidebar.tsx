@@ -1,9 +1,5 @@
 import { RefObject, useEffect } from 'react';
 
-import { useDebounce } from '@/shared/utils/useDebounce';
-
-import Input from './Input';
-
 import { BookmarkItem, BookmarkList, useBookmarks } from '@/features/bookmark';
 import { useCurrentRegion, useRegionActions } from '@/features/region';
 import {
@@ -12,6 +8,10 @@ import {
   useKeyword,
   useKeywordActions,
 } from '@/features/search';
+
+import { useDebounce } from '@/shared/utils/useDebounce';
+
+import Input from './Input';
 
 interface SidebarProps {
   ref?: RefObject<HTMLDivElement | null>;

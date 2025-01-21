@@ -12,6 +12,7 @@ import {
   useRegionActions,
   useSearchedRegion,
 } from '@/features/region';
+
 import Sidebar from '@/shared/ui/Sidebar';
 import { useOutsideClick } from '@/shared/utils/useOutsideClick';
 

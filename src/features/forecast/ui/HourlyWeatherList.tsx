@@ -1,6 +1,6 @@
-import HourlyWeather from './HourlyWeather';
+import { Weather } from '../model/types';
 
-import { Weather } from '@/features/forecast';
+import HourlyWeather from './HourlyWeather';
 
 interface HourlyWeatherListProps {
   forecast: Weather[];
