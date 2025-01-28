@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { Bookmark } from '@/types/Bookmark';
+import { Bookmark } from '../model/types';
 
 interface BookmarkItemProps {
   data: Bookmark;

@@ -88,12 +88,7 @@ module.exports = {
             position: 'before',
           },
           {
-            pattern: '@/assets/*',
-            group: 'internal',
-            position: 'after',
-          },
-          {
-            pattern: '@/components/*',
+            pattern: '@/app/*/*',
             group: 'internal',
             position: 'after',
           },
@@ -103,22 +98,22 @@ module.exports = {
             position: 'after',
           },
           {
-            pattern: '@/services/*',
+            pattern: '@/widgets/*',
             group: 'internal',
             position: 'after',
           },
           {
-            pattern: '@/styles/*',
+            pattern: '@/features/*',
             group: 'internal',
             position: 'after',
           },
           {
-            pattern: '@/types{/*,/*/*}',
+            pattern: '@/entities/*',
             group: 'internal',
             position: 'after',
           },
           {
-            pattern: '@/utils/*',
+            pattern: '@/shared/*/*',
             group: 'internal',
             position: 'after',
           },
